@@ -39,3 +39,6 @@ helm repo update
 
 helm install aks-kargo-analysisrun-logs aks-kargo-analysisrun-logs/aks-kargo-analysisrun-logs --create-namespace --namespace aks-kargo-analysisrun-logs -f values.yaml
 ```
+
+### URL Template
+http://aks-kargo-analysisrun-logs/logs/${{shard}}/${{jobNamespace}}/${{job}}/${{container}}

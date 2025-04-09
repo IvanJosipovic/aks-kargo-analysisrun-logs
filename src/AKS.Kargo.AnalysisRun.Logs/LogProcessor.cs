@@ -15,18 +15,18 @@ public class LogProcessor : ILogProcessor
         _logQueryClient = logQueryClient;
     }
 
-    public async Task<IReadOnlyList<string>> GetLogs(string environmentName, string jobNamespace, string jobName, string containerName)
+    public async Task<IReadOnlyList<string>> GetLogs(string shardName, string jobNamespace, string jobName, string containerName)
     {
-        var environment = _settings.Environments.Where(e => e.Name == environmentName).FirstOrDefault();
+        var shard = _settings.Shards.Where(e => e.Name == shardName).FirstOrDefault();
 
-        if (environment == null)
+        if (shard == null)
         {
-            _logger.LogError("Environment {Environment} not found in settings.", environmentName);
+            _logger.LogError("Shard {shardName} not found in settings.", shardName);
             return [];
         }
 
         var results = await _logQueryClient.QueryWorkspaceAsync<string>(
-            workspaceId: environment.AzureMonitorWorkspaceId,
+            workspaceId: shard.AzureMonitorWorkspaceId,
             query: $"ContainerLogV2 | where PodNamespace == '{jobNamespace}' and PodName == '{jobName}' and ContainerName == '{containerName}' | project LogMessage",
             QueryTimeRange.All
         );

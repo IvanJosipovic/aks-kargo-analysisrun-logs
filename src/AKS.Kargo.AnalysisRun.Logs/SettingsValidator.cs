@@ -6,18 +6,17 @@ public class SettingsValidator : AbstractValidator<Settings>
 {
     public SettingsValidator()
     {
-        //RuleFor(x => x.Authentication).NotNull();
         RuleFor(x => x.Authentication).SetValidator(new AuthenticationValidator());
 
-        RuleFor(x => x.Environments).NotEmpty();
-        RuleFor(x => x.Environments).Custom((environments, context) =>
+        RuleFor(x => x.Shards).NotEmpty();
+        RuleFor(x => x.Shards).Custom((shards, context) =>
         {
-            if (environments != null && environments.GroupBy(e => e.Name).Any(g => g.Count() > 1))
+            if (shards != null && shards.GroupBy(e => e.Name).Any(g => g.Count() > 1))
             {
-                context.AddFailure("Environments", "Environment names must be unique.");
+                context.AddFailure("Shards", "Shard names must be unique.");
             }
         });
-        RuleForEach(x => x.Environments).SetValidator(new EnvironmentsValidator());
+        RuleForEach(x => x.Shards).SetValidator(new ShardValidator());
     }
 }
 
@@ -31,9 +30,9 @@ public class AuthenticationValidator : AbstractValidator<Authentication>
     }
 }
 
-public class EnvironmentsValidator : AbstractValidator<Environment>
+public class ShardValidator : AbstractValidator<Shard>
 {
-    public EnvironmentsValidator()
+    public ShardValidator()
     {
         RuleFor(x => x.Name).NotEmpty();
         RuleFor(x => x.AzureMonitorWorkspaceId).NotEmpty().Must(x => Guid.TryParse(x, out var result)).WithMessage("Must be Guid");
