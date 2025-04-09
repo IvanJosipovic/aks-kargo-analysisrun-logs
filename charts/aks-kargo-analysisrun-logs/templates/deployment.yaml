@@ -37,35 +37,17 @@ spec:
           - name: ASPNETCORE_ENVIRONMENT
             value: Production
           {{- if .Values.settings.authentication.kubeSecretName }}
-          - name: AZURE_TENANT_ID
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.settings.authentication.kubeSecretName }}
-                key: tenantId
-                optional: true
           - name: settings__authentication__tenantId
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.settings.authentication.kubeSecretName }}
                 key: tenantId
                 optional: true
-          - name: AZURE_CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.settings.authentication.kubeSecretName }}
-                key: clientId
-                optional: true
           - name: settings__authentication__clientId
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.settings.authentication.kubeSecretName }}
                 key: clientId
-                optional: true
-          - name: AZURE_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.settings.authentication.kubeSecretName }}
-                key: clientSecret
                 optional: true
           - name: settings__authentication__clientSecret
             valueFrom:
@@ -74,19 +56,6 @@ spec:
                 key: clientSecret
                 optional: true
           {{- else}}
-          {{- if .Values.settings.authentication.tenantId }}
-          - name: AZURE_TENANT_ID
-            value: {{ .Values.settings.authentication.tenantId }}
-          {{- end }}
-          {{- if .Values.settings.authentication.clientId }}
-          - name: AZURE_CLIENT_ID
-            value: {{ .Values.settings.authentication.clientId }}
-          {{- end }}
-          {{- if .Values.settings.authentication.clientSecret }}
-          - name: AZURE_CLIENT_SECRET
-            value: {{ .Values.settings.authentication.clientSecret }}
-          {{- end }}
-          {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
