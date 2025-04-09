@@ -36,7 +36,7 @@ settings:
     # Must contain keys called tenantId or clientId or clientSecret
     kubeSecretName: ""
 
-  environments:
+  shards:
   - name: development
     azureMonitorWorkspaceId: bc012b1d-b6a7-4e16-91b5-97093b388ee0
   - Name: production

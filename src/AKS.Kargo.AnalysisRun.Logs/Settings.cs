@@ -6,7 +6,7 @@ public class Settings
 
     public LogFormat LogFormat { get; set; }
 
-    public List<Environment> Environments { get; set; } = null!;
+    public List<Shard> Shards { get; set; } = null!;
 
     public Authentication Authentication { get; set; } = null!;
 }
@@ -24,7 +24,7 @@ public enum LogFormat
     JSON,
 }
 
-public class Environment
+public class Shard
 {
     public string Name { get; set; } = null!;
     public string AzureMonitorWorkspaceId { get; set; } = null!;
