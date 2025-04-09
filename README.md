@@ -41,4 +41,4 @@ helm install aks-kargo-analysisrun-logs aks-kargo-analysisrun-logs/aks-kargo-ana
 ```
 
 ### URL Template
-http://aks-kargo-analysisrun-logs/logs/\${{shard}}/\${{jobNamespace}}/\${{job}}/\${{container}}
+http://aks-kargo-analysisrun-logs/logs/${{shard}}/${{jobNamespace}}/${{job}}/${{container}}
