@@ -9,6 +9,8 @@ public class Settings
     public List<Shard> Shards { get; set; } = null!;
 
     public Authentication Authentication { get; set; } = null!;
+
+    public string AuthorizationHeader { get; set; } = null!;
 }
 
 public class Authentication

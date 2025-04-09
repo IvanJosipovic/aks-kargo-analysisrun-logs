@@ -42,19 +42,23 @@ spec:
               secretKeyRef:
                 name: {{ .Values.settings.authentication.kubeSecretName }}
                 key: tenantId
-                optional: true
           - name: settings__authentication__clientId
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.settings.authentication.kubeSecretName }}
                 key: clientId
-                optional: true
           - name: settings__authentication__clientSecret
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.settings.authentication.kubeSecretName }}
                 key: clientSecret
-                optional: true
+          {{- end }}
+          {{- if .Values.settings.authorizationHeaderSecretName }}
+          - name: settings__authorizationHeader
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.settings.authorizationHeaderSecretName }}
+                key: authorizationHeader
           {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

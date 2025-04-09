@@ -21,6 +21,7 @@ settings:
   # Log Format (Simple or JSON)
   logFormat: Simple
 
+  # Used to connect to the Log Analytics Workspace when using Service Principle authentication
   authentication:
     # Entra Tenant Id. This is needed for Service Principle authentication
     tenantId: ""
@@ -35,6 +36,14 @@ settings:
     # Note, this will override the settings above
     # Must contain keys called tenantId or clientId or clientSecret
     kubeSecretName: ""
+
+  # Requests to this API must include this value in the Authorization header.
+  authorizationHeader: ""
+
+  # Alternatively, enter the Kubernetes Secret name
+  # Note, this will override the setting above
+  # Must contain key called authorizationHeader
+  authorizationHeaderSecretName: ""
 
   shards:
   - name: development

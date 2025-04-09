@@ -21,7 +21,7 @@ public class LogProcessor : ILogProcessor
 
         if (shard == null)
         {
-            _logger.LogError("Shard {shardName} not found in settings.", shardName);
+            _logger.LogError("Shard \"{shardName}\" not found in settings.", shardName);
             return [];
         }
 

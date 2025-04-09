@@ -93,15 +93,20 @@ public class Program
         app.MapPrometheusScrapingEndpoint();
         app.MapHealthChecks("/health");
 
-        // Example: "http://aks-kargo-analysisrun-logs/logs/${{shard}}/${{jobNamespace}}/${{job}}/${{container}}".
-        app.MapGet("/logs/{shardName}/{jobNamespace}/{job}/{container}", async (string shardName,
+        app.MapGet("/logs/{shardName}/{jobNamespace}/{jobName}/{containerName}", async (string shardName,
                                                                                   string jobNamespace,
-                                                                                  string job,
-                                                                                  string container,
+                                                                                  string jobName,
+                                                                                  string containerName,
                                                                                   [FromServices] ILogProcessor processor,
+                                                                                  HttpRequest request,
                                                                                   HttpResponse response) =>
         {
-            var logs = await processor.GetLogs(shardName, jobNamespace, job, container);
+            if (!string.IsNullOrEmpty(settings.AuthorizationHeader) && !request.Headers.Authorization.Equals(settings.AuthorizationHeader))
+            {
+                return Results.Unauthorized();
+            }
+
+            var logs = await processor.GetLogs(shardName, jobNamespace, jobName, containerName);
 
             response.ContentType = "text/event-stream";
             response.Headers.CacheControl = "no-cache";
