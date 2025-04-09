@@ -27,7 +27,7 @@ public class LogProcessor : ILogProcessor
 
         var results = await _logQueryClient.QueryWorkspaceAsync<string>(
             workspaceId: shard.AzureMonitorWorkspaceId,
-            query: $"ContainerLogV2 | where PodNamespace == '{jobNamespace}' and PodName == '{jobName}' and ContainerName == '{containerName}' | project LogMessage",
+            query: $"ContainerLogV2 | where PodNamespace == '{jobNamespace}' and PodName startswith '{jobName}' and ContainerName == '{containerName}' | project LogMessage",
             QueryTimeRange.All,
             options: new LogsQueryOptions
             {
