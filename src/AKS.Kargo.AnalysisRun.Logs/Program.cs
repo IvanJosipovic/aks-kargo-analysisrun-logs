@@ -110,12 +110,12 @@ public class Program
 
             foreach (var log in logs)
             {
-                await response.WriteAsync(log + System.Environment.NewLine);
+                await response.WriteAsync(log + Environment.NewLine);
                 await response.Body.FlushAsync();
             }
 
             return Results.Empty;
-        });
+        }).WithRequestTimeout(TimeSpan.FromMinutes(2));
 
         app.Run();
     }

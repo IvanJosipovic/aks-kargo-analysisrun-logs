@@ -1,4 +1,4 @@
 @AKS.Kargo.AnalysisRun.Logs_HostAddress = http://localhost:8080
 
-GET {{AKS.Kargo.AnalysisRun.Logs_HostAddress}}/logs/dev/jobNamespace/jobName/containerName
+GET {{AKS.Kargo.AnalysisRun.Logs_HostAddress}}/logs/dev/argo-cd/argo-cd-argocd-application-controller-0/application-controller
 ###
