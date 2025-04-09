@@ -55,7 +55,7 @@ spec:
                 name: {{ .Values.settings.authentication.kubeSecretName }}
                 key: clientSecret
                 optional: true
-          {{- else}}
+          {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
