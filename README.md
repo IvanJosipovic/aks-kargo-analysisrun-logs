@@ -25,7 +25,7 @@ helm repo add aks-kargo-analysisrun-logs https://ivanjosipovic.github.io/aks-kar
 
 helm repo update
 
-helm inspect values aks-kargo-analysisrun-logs/aks-kargo-analysisrun-logs --devel > values.yaml
+helm inspect values aks-kargo-analysisrun-logs/aks-kargo-analysisrun-logs > values.yaml
 ```
 
 Modify the settings to fit your needs
@@ -41,4 +41,4 @@ helm install aks-kargo-analysisrun-logs aks-kargo-analysisrun-logs/aks-kargo-ana
 ```
 
 ### URL Template
-http://aks-kargo-analysisrun-logs/logs/${{shard}}/${{jobNamespace}}/${{job}}/${{container}}
+http://aks-kargo-analysisrun-logs/logs/${{shard}}/${{jobNamespace}}/${{jobName}}/${{container}}
