@@ -21,7 +21,11 @@ This project is an API server which implements the [Kargo AnalysisRun Log](https
 Download the default Helm Values
 
 ```bash
-helm inspect values https://ivanjosipovic.github.io/aks-kargo-analysisrun-logs/aks-kargo-analysisrun-logs > values.yaml
+helm repo add aks-kargo-analysisrun-logs https://ivanjosipovic.github.io/aks-kargo-analysisrun-logs
+
+helm repo update
+
+helm inspect values aks-kargo-analysisrun-logs/aks-kargo-analysisrun-logs --devel > values.yaml
 ```
 
 Modify the settings to fit your needs
