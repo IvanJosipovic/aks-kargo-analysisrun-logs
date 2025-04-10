@@ -21,7 +21,7 @@ settings:
   # Log Format (Simple or JSON)
   logFormat: Simple
 
-  # Used to connect to the Log Analytics Workspace when using Service Principle authentication
+  # Used to connect to the Log Analytics Workspace when using Service Principal authentication
   authentication:
     # Entra Tenant Id.
     tenantId: ""

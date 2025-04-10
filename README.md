@@ -11,7 +11,7 @@ This project is an API server which implements the [Kargo AnalysisRun Log](https
 ## Features
 - Read AnalysisRun Logs from Log Analytics Workspace
 - Authentication
-  - [Service Principle](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/api/register-app-for-token?tabs=portal)
+  - [Service Principal](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/api/register-app-for-token?tabs=portal)
   - [Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview)
 - AMD64 and ARM64 support
 
