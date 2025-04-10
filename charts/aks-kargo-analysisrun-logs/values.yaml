@@ -23,18 +23,18 @@ settings:
 
   # Used to connect to the Log Analytics Workspace when using Service Principle authentication
   authentication:
-    # Entra Tenant Id. This is needed for Service Principle authentication
+    # Entra Tenant Id.
     tenantId: ""
 
-    # Entra Application Client ID. This is needed for Service Principle authentication
+    # Entra Application Client Id.
     clientId: ""
 
-    # Entra Application Client Secret. This is needed for Service Principle authentication
+    # Entra Application Client Secret.
     clientSecret: ""
 
     # Alternatively, enter the Kubernetes Secret name
     # Note, this will override the settings above
-    # Must contain keys called tenantId or clientId or clientSecret
+    # Must contain keys called tenantId and clientId and clientSecret
     kubeSecretName: ""
 
   # Requests to this API must include this value in the Authorization header.
