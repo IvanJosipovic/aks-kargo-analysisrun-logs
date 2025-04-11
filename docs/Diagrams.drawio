@@ -1,0 +1,45 @@
+<mxfile host="Electron" modified="2025-04-11T00:36:10.224Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="PneAPrC7IOJP7VHIl22q" version="24.0.4" type="device">
+  <diagram name="Page-1" id="Hao7ndjsZJh5Uqbxbapb">
+    <mxGraphModel dx="875" dy="598" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="u18oBKRGe37LT1BTIHt9-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="u18oBKRGe37LT1BTIHt9-1" target="u18oBKRGe37LT1BTIHt9-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="u18oBKRGe37LT1BTIHt9-6" value="HTTP Get&lt;div&gt;Authorization: my-api-key&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="u18oBKRGe37LT1BTIHt9-4">
+          <mxGeometry x="-0.0177" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u18oBKRGe37LT1BTIHt9-1" value="&lt;div&gt;&lt;font style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;kargo-api&lt;/font&gt;&lt;/div&gt;" style="aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=pod;verticalAlign=top;labelPosition=center;verticalLabelPosition=bottom;align=center;" vertex="1" parent="1">
+          <mxGeometry x="10" y="10" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="u18oBKRGe37LT1BTIHt9-2" value="&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;aks-kargo-analysisrun-logs&lt;/span&gt;&lt;/div&gt;" style="aspect=fixed;sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon2;prIcon=pod;verticalAlign=top;labelPosition=center;verticalLabelPosition=bottom;align=center;" vertex="1" parent="1">
+          <mxGeometry x="300" y="10" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="u18oBKRGe37LT1BTIHt9-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="u18oBKRGe37LT1BTIHt9-2" target="u18oBKRGe37LT1BTIHt9-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="509.3800000000001" y="34" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u18oBKRGe37LT1BTIHt9-11" value="HTTP Get&lt;div&gt;Authorization: token&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="u18oBKRGe37LT1BTIHt9-10">
+          <mxGeometry x="0.0033" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u18oBKRGe37LT1BTIHt9-8" value="Log Analytics Workspaces" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/analytics/Log_Analytics_Workspaces.svg;" vertex="1" parent="1">
+          <mxGeometry x="530" y="14" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="u18oBKRGe37LT1BTIHt9-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="u18oBKRGe37LT1BTIHt9-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="440" y="50" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u18oBKRGe37LT1BTIHt9-13" value="App Registration&lt;div&gt;Credentials&lt;/div&gt;" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/identity/App_Registrations.svg;labelBackgroundColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="420" y="140" width="39.38" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
