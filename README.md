@@ -11,14 +11,124 @@ This project is an API server which implements the [Kargo AnalysisRun Log](https
 ## Features
 - Read AnalysisRun Logs from Log Analytics Workspace
 - Authentication
-  - [Service Principal](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/api/register-app-for-token?tabs=portal)
+  - [Client Secret](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/api/register-app-for-token?tabs=portal)
   - [Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview)
 - AMD64 and ARM64 support
 
-## Installation
-### Configure Helm Values
+## Example
+![](/docs/image.png)
 
-Download the default Helm Values
+## How it Works
+Kargo queries this API, which in turn queries the Azure Log Analytics Workspace to retrieve container logs.
+![](/docs/Diagram.png)
+
+## Authentication to Log Analytics Workspace
+
+
+### Client Secret
+1. Create an [App Registration](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/api/register-app-for-token?tabs=portal) in Azure Portal
+2. Grant the App Registration `Reader` Role on the Log Analytics Workspace
+3. Generate a Client Secret for the App Registration
+4. In the aks-kargo-analysisrun-logs Helm Chart enter the settings.authentication values (tenantId, clientId, clientSecret)
+
+### Workload Identity
+1. Create a [Managed Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster#create-a-managed-identity)
+2. Set the [Federated credetential](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster#create-the-federated-identity-credential) details in the Managed Identity
+  - Set Subject "system:serviceaccount:{namespace}:{release-name}"
+3. Grant the Managed Identity `Reader` Role on the Log Analytics Workspace
+4. In the aks-kargo-analysisrun-logs Helm Chart set
+    ```yaml
+    serviceAccount:
+      create: true
+      annotations:
+        azure.workload.identity/client-id: {Enter Managed Identity Client Id}
+
+    podLabels:
+      azure.workload.identity/use: "true"
+    ```
+
+## Configurations
+### Non-sharded Kargo Example
+Set the following values in the aks-kargo-analysisrun-logs Helm Chart
+```yaml
+settings:
+  # Used to connect to the Log Analytics Workspace when using Client Secret authentication
+  authentication:
+    # Entra Tenant Id.
+    tenantId: "enter-tenant-id"
+
+    # Entra Application Client Id.
+    clientId: "enter-application-client-id"
+
+    # Entra Application Client Secret.
+    clientSecret: "enter-application-client-secret"
+
+  # Requests to this API must include this value in the Authorization header.
+  authorizationHeader: "my-api-key"
+
+  # For non-sharded Kargo, use 'default' and set the Azure Monitor Workspace ID.
+  shards:
+  - name: default
+    azureMonitorWorkspaceId: "enter-azure-monitor-workspace-id"
+```
+
+#### Kargo Values
+Set the following values in the Kargo Helm Chart
+```yaml
+api:
+  ## All settings relating to the use of Argo Rollouts by the API Server.
+  rollouts:
+    integrationEnabled: true
+    logs:
+      enabled: true
+      urlTemplate: "http://aks-kargo-analysisrun-logs/logs/default/${{jobNamespace}}/${{jobName}}/${{container}}"
+      httpHeaders:
+        Authorization: "my-api-key"
+```
+
+
+### Sharded Kargo
+Set the following values in the aks-kargo-analysisrun-logs Helm Chart
+```yaml
+settings:
+  # Used to connect to the Log Analytics Workspace when using Client Secret authentication
+  authentication:
+    # Entra Tenant Id.
+    tenantId: "enter-entra-tenant-id"
+
+    # Entra Application Client Id.
+    clientId: "enter-entra-application-client-id"
+
+    # Entra Application Client Secret.
+    clientSecret: "enter-entra-application-client-secret"
+
+  # Requests to this API must include this value in the Authorization header.
+  authorizationHeader: "my-api-key"
+
+  # For sharded Kargo, set each shard's name and corresponding Azure Monitor Workspace ID.
+  shards:
+  - name: development
+    azureMonitorWorkspaceId: "enter-development-azure-monitor-workspace-id"
+  - Name: production
+    azureMonitorWorkspaceId: "enter-production-azure-monitor-workspace-id"
+```
+
+#### Kargo Values
+Set the following values in the Kargo Helm Chart
+```yaml
+  ## All settings relating to the use of Argo Rollouts by the API Server.
+  rollouts:
+    integrationEnabled: true
+    logs:
+      enabled: true
+      urlTemplate: "http://aks-kargo-analysisrun-logs/logs/${{shard}}/${{jobNamespace}}/${{jobName}}/${{container}}"
+      httpHeaders:
+        Authorization: "my-api-key"
+```
+
+## Installation
+
+Download the default [Helm Values](/charts/aks-kargo-analysisrun-logs/values.yaml)
 
 ```bash
 helm repo add aks-kargo-analysisrun-logs https://ivanjosipovic.github.io/aks-kargo-analysisrun-logs
@@ -28,17 +138,7 @@ helm repo update
 helm inspect values aks-kargo-analysisrun-logs/aks-kargo-analysisrun-logs > values.yaml
 ```
 
-Modify the settings to fit your needs
-
-### Install Helm Chart
-
+Install Helm Chart
 ```bash
-helm repo add aks-kargo-analysisrun-logs https://ivanjosipovic.github.io/aks-kargo-analysisrun-logs
-
-helm repo update
-
 helm install aks-kargo-analysisrun-logs aks-kargo-analysisrun-logs/aks-kargo-analysisrun-logs --create-namespace --namespace aks-kargo-analysisrun-logs -f values.yaml
 ```
-
-### URL Template
-http://aks-kargo-analysisrun-logs/logs/${{shard}}/${{jobNamespace}}/${{jobName}}/${{container}}

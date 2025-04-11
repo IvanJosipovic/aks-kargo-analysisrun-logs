@@ -21,7 +21,7 @@ settings:
   # Log Format (Simple or JSON)
   logFormat: Simple
 
-  # Used to connect to the Log Analytics Workspace when using Service Principal authentication
+  # Used to connect to the Log Analytics Workspace when using Client Secret authentication
   authentication:
     # Entra Tenant Id.
     tenantId: ""
@@ -45,12 +45,11 @@ settings:
   # Must contain key called authorizationHeader
   authorizationHeaderSecretName: ""
 
+  # For non-sharded Kargo, use 'default' and set the Azure Monitor Workspace ID.
+  # For sharded Kargo, set each shard's name and corresponding Azure Monitor Workspace ID.
   shards:
-  - name: development
+  - name: default
     azureMonitorWorkspaceId: bc012b1d-b6a7-4e16-91b5-97093b388ee0
-  - Name: production
-    azureMonitorWorkspaceId: 7ab1c08d-ac24-4444-9994-5865f63ff309
-
 
 serviceAccount:
   # Specifies whether a service account should be created
