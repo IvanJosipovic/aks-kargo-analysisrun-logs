@@ -34,7 +34,20 @@ The following query is issued:
 1. Create an [App Registration](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/api/register-app-for-token?tabs=portal) in Azure Portal
 2. Grant the App Registration `Reader` Role on the Log Analytics Workspace
 3. Generate a Client Secret for the App Registration
-4. In the aks-kargo-analysisrun-logs Helm Chart enter the settings.authentication values (tenantId, clientId, clientSecret)
+4. In the aks-kargo-analysisrun-logs Helm Chart set
+    ```yaml
+    settings:
+      # Used to connect to the Log Analytics Workspace when using Client Secret authentication
+      authentication:
+        # Entra Tenant Id.
+        tenantId: "enter-tenant-id"
+
+        # Entra Application Client Id.
+        clientId: "enter-application-client-id"
+
+        # Entra Application Client Secret.
+        clientSecret: "enter-application-client-secret"
+    ```
 
 ### Workload Identity
 1. Create a [Managed Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster#create-a-managed-identity)
@@ -52,7 +65,7 @@ The following query is issued:
       azure.workload.identity/use: "true"
     ```
 
-## Configurations
+## Example Configurations
 ### Non-sharded Kargo Example
 Set the following values in the aks-kargo-analysisrun-logs Helm Chart
 ```yaml
@@ -142,6 +155,7 @@ helm repo update
 
 helm inspect values aks-kargo-analysisrun-logs/aks-kargo-analysisrun-logs > values.yaml
 ```
+Modify the settings to fit your needs
 
 Install Helm Chart
 ```bash
