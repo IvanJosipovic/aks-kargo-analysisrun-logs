@@ -23,7 +23,7 @@ Kargo queries this API, which in turn queries the Azure Log Analytics Workspace 
 
 The following query is issued:
 
-`"ContainerLogV2 | where PodNamespace == '{jobNamespace}' and PodName startswith '{jobName}' and ContainerName == '{container}' | project LogMessage"`
+`ContainerLogV2 | where PodNamespace == '{jobNamespace}' and PodName startswith '{jobName}' and ContainerName == '{container}' | project LogMessage`
 
 ![](/docs/Diagram.png)
 
