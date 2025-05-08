@@ -20,8 +20,13 @@
   ],
   "packageRules": [
     {
-      "matchManagers": ["nuget"],
-      "matchPackageNames": ["OpenTelemetry.Exporter.Prometheus.AspNetCore", "OpenTelemetry.Instrumentation.EventCounters"],
+      "matchManagers": [
+        "nuget"
+      ],
+      "matchPackageNames": [
+        "OpenTelemetry.Exporter.Prometheus.AspNetCore",
+        "OpenTelemetry.Instrumentation.EventCounters"
+      ],
       "ignoreUnstable": false,
       "respectLatest": false
     },
@@ -67,8 +72,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "Dockerfile$"
+      "managerFilePatterns": [
+        "/Dockerfile$/"
       ],
       "matchStrings": [
         "#\\s*renovate:\\s*datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sENV .*?_VERSION=\"(?<currentValue>.*)\"\\s"
