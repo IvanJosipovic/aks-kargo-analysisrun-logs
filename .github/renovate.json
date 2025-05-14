@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "enabled": true,
   "timezone": "America/Vancouver",
-  "dependencyDashboard": true,
   "semanticCommits": "enabled",
   "assignees": [
     "@ivanjosipovic"
@@ -20,6 +19,7 @@
   ],
   "packageRules": [
     {
+      "ignoreUnstable": false,
       "matchManagers": [
         "nuget"
       ],
@@ -27,46 +27,57 @@
         "OpenTelemetry.Exporter.Prometheus.AspNetCore",
         "OpenTelemetry.Instrumentation.EventCounters"
       ],
-      "ignoreUnstable": false,
       "respectLatest": false
     },
     {
+      "automerge": true,
+      "matchFileNames": [
+        "global.json"
+      ],
       "matchUpdateTypes": [
         "minor",
         "patch",
         "digest"
-      ],
-      "automerge": true,
-      "semanticCommitType": "fix",
-      "matchFileNames": [
-        "src/**",
-        "global.json"
       ]
     },
     {
+      "automerge": true,
+      "matchFileNames": [
+        "src/**"
+      ],
       "matchUpdateTypes": [
         "minor",
         "patch",
         "digest"
       ],
+      "semanticCommitType": "fix"
+    },
+    {
       "automerge": true,
       "matchFileNames": [
         "tests/**",
         "benchmarks/**"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
       ]
     },
     {
+      "automerge": true,
+      "groupName": "Dockerfile Dependecies",
+      "groupSlug": "dockerfile-dependecies",
+      "matchPackageNames": [
+        "alpine_*"
+      ],
       "matchUpdateTypes": [
         "major",
         "minor",
         "patch",
         "digest"
       ],
-      "automerge": true,
-      "semanticCommitType": "fix",
-      "matchPackageNames": [
-        "alpine_*/ca-certificates-bundle"
-      ]
+      "semanticCommitType": "fix"
     }
   ],
   "customManagers": [
