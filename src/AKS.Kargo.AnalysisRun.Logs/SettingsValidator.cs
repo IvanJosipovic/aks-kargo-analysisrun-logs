@@ -24,9 +24,9 @@ public class AuthenticationValidator : AbstractValidator<Authentication>
 {
     public AuthenticationValidator()
     {
-        RuleFor(x => x.TenantId).NotEmpty().When(x => x.ClientId != null || x.ClientSecret != null);
-        RuleFor(x => x.ClientId).NotEmpty().When(x => x.TenantId != null || x.ClientSecret != null);
-        RuleFor(x => x.ClientSecret).NotEmpty().When(x => x.TenantId != null || x.ClientId != null);
+        RuleFor(x => x.TenantId).NotEmpty().When(x => !string.IsNullOrEmpty(x.ClientId) || !string.IsNullOrEmpty(x.ClientSecret));
+        RuleFor(x => x.ClientId).NotEmpty().When(x => !string.IsNullOrEmpty(x.TenantId) || !string.IsNullOrEmpty(x.ClientSecret));
+        RuleFor(x => x.ClientSecret).NotEmpty().When(x => !string.IsNullOrEmpty(x.TenantId) || !string.IsNullOrEmpty(x.ClientId));
     }
 }
 
