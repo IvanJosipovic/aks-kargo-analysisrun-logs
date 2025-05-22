@@ -28,7 +28,7 @@ public class Program
 
             TokenCredential tokenCredential;
 
-            if (!string.IsNullOrEmpty(settings.Authentication) && !string.IsNullOrEmpty(settings.Authentication.TenantId) && !string.IsNullOrEmpty(settings.Authentication.ClientId) && !string.IsNullOrEmpty(settings.Authentication.ClientSecret))
+            if (settings.Authentication != null && !string.IsNullOrEmpty(settings.Authentication.TenantId) && !string.IsNullOrEmpty(settings.Authentication.ClientId) && !string.IsNullOrEmpty(settings.Authentication.ClientSecret))
             {
                 tokenCredential = new ClientSecretCredential(settings.Authentication.TenantId, settings.Authentication.ClientId, settings.Authentication.ClientSecret);
             }
