@@ -1,4 +1,5 @@
 ﻿using Azure.Monitor.Query;
+using Azure.Monitor.Query.Models;
 
 namespace AKS.Kargo.AnalysisRun.Logs;
 
@@ -15,26 +16,26 @@ public class LogProcessor : ILogProcessor
         _logQueryClient = logQueryClient;
     }
 
-    public async Task<IReadOnlyList<string>> GetLogs(string shardName, string jobNamespace, string jobName, string containerName)
+    public async IAsyncEnumerable<string?> GetLogs(string shardName, string jobNamespace, string jobName, string containerName)
     {
         var shard = _settings.Shards.Where(e => e.Name == shardName).FirstOrDefault();
 
         if (shard == null)
         {
             _logger.LogError("Shard \"{shardName}\" not found in settings.", shardName);
-            return [];
+            yield break;
         }
 
-        var results = await _logQueryClient.QueryWorkspaceAsync<string>(
-            workspaceId: shard.AzureMonitorWorkspaceId,
-            query: $"ContainerLogV2 | where PodNamespace == '{jobNamespace}' and PodName startswith '{jobName}' and ContainerName == '{containerName}' | project LogMessage",
-            QueryTimeRange.All,
-            options: new LogsQueryOptions
-            {
-                AllowPartialErrors = true // Prevents error, The results of this query exceed the set limit of 64000000 bytes, so not all records were returned (E_QUERY_RESULT_SET_TOO_LARGE, 0x80DA0003
-            }
-        );
+        var query = $"ContainerLogV2 | where PodNamespace == '{jobNamespace}' and PodName startswith '{jobName}' and ContainerName == '{containerName}' | project LogMessage";
 
-        return results.Value;
+        var results = await _logQueryClient.QueryWorkspaceAsync(shard.AzureMonitorWorkspaceId, query, QueryTimeRange.All, new LogsQueryOptions()
+        {
+            AllowPartialErrors = true // Prevents error, The results of this query exceed the set limit of 64000000 bytes, so not all records were returned (E_QUERY_RESULT_SET_TOO_LARGE, 0x80DA0003
+        });
+
+        foreach (LogsTableRow row in results.Value.Table.Rows)
+        {
+            yield return row.GetString("LogMessage");
+        }
     }
 }
