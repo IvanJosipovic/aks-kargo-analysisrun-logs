@@ -13,7 +13,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateSlimBuilder(args);
 
         var settings = builder.Configuration.GetSection("Settings").Get<Settings>()!;
 
@@ -106,18 +106,17 @@ public class Program
                 return Results.Unauthorized();
             }
 
-            var logs = await processor.GetLogs(shardName, jobNamespace, jobName, containerName);
-
             response.ContentType = "text/event-stream";
             response.Headers.CacheControl = "no-cache";
             response.Headers.Connection = "keep-alive";
             response.StatusCode = StatusCodes.Status200OK;
 
-            foreach (var log in logs)
+            await foreach (var log in processor.GetLogs(shardName, jobNamespace, jobName, containerName))
             {
                 await response.WriteAsync(log + Environment.NewLine);
-                await response.Body.FlushAsync();
             }
+
+            await response.Body.FlushAsync();
 
             return Results.Empty;
         }).WithRequestTimeout(TimeSpan.FromMinutes(2));
