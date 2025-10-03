@@ -11,7 +11,7 @@ LABEL org.opencontainers.image.description="AKS Kargo AnalysisRun Logs"
 ENV BUSYBOX_VERSION="1.37.0-r19"
 
 # renovate: datasource=repology depName=alpine_3_22/busybox-binsh versioning=loose
-ENV BUSYBOX_BINSH_VERSION="1.37.0-r18"
+ENV BUSYBOX_BINSH_VERSION="1.37.0-r19"
 
 # renovate: datasource=repology depName=alpine_3_22/ca-certificates-bundle versioning=loose
 ENV CA_CERTIFICATES_BUNDLES_VERSION="20250619-r0"
