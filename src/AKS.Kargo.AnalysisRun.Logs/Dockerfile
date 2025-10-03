@@ -5,7 +5,7 @@ WORKDIR /app
 EXPOSE 8080
 ENV ASPNETCORE_HTTP_PORTS=8080
 
-LABEL org.opencontainers.image.description="Prometheus Alertmanager Receiver for Azure DevOps"
+LABEL org.opencontainers.image.description="AKS Kargo AnalysisRun Logs"
 
 # renovate: datasource=repology depName=alpine_3_22/busybox versioning=loose
 ENV BUSYBOX_VERSION="1.37.0-r18"
@@ -46,9 +46,6 @@ RUN apk add --upgrade --no-cache \
         zlib>$ZLIB_VERSION
 
 USER $APP_UID
-
-COPY --from=publish /app/publish .
-ENTRYPOINT ["./AKS.Kargo.AnalysisRun.Logs"]
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine3.22@sha256:033283403fc5b8789467bb6a0f9670ebe0bc8f2276710cc99f1820f01789bafe AS build

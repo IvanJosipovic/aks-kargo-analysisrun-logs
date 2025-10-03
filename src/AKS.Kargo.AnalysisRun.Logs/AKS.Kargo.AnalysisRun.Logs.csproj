@@ -13,8 +13,8 @@
     <OptimizationPreference>Speed</OptimizationPreference>
     <PublishAot>false</PublishAot>
     <PublishIISAssets>false</PublishIISAssets>
-    <PublishReadyToRun>true</PublishReadyToRun>
-    <SelfContained>true</SelfContained>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <SelfContained>false</SelfContained>
     <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <UserSecretsId>211c6aa5-24b3-4acc-88a9-5fa0db4d9578</UserSecretsId>
