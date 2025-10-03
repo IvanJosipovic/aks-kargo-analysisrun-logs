@@ -33,6 +33,7 @@ public class LogProcessor : ILogProcessor
             | where PodName == toscalar(
                 KubePodInventory
                 | where ControllerName == "{jobName}"
+                | where Namespace == "{jobNamespace}"
                 | top 1 by TimeGenerated desc
                 | project Name
             )
