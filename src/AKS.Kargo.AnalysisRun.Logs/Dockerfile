@@ -1,60 +1,74 @@
 ARG BUILDPLATFORM=linux/amd64
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0-alpine3.21@sha256:f47429a125e38d83f5231a78dde18106cb447d541f7ffdc5b8af4d227a323d95 AS build
-RUN apk add build-base zlib-dev
-WORKDIR /src
-COPY AKS.Kargo.AnalysisRun.Logs.csproj .
-RUN dotnet restore "AKS.Kargo.AnalysisRun.Logs.csproj"
-COPY . .
-RUN dotnet build "AKS.Kargo.AnalysisRun.Logs.csproj" -c Release -o /app/build
-
-FROM build AS publish
-ARG VERSION=0.0.1
-RUN dotnet publish "AKS.Kargo.AnalysisRun.Logs.csproj" -c Release --use-current-runtime -o /app/publish /p:Version=${VERSION}
-
-FROM mcr.microsoft.com/dotnet/runtime-deps:9.0-alpine3.21@sha256:9a76f1a077108fd50b12d8b86886f322123ba5c1809fd2d5ec4f3cae690534d8 AS base
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.22@sha256:2a325357e7315a0ea014931e3b89d6feeba56d692c586746059901158fae339d AS base
 WORKDIR /app
 EXPOSE 8080
+ENV ASPNETCORE_HTTP_PORTS=8080
 
 LABEL org.opencontainers.image.description="Prometheus Alertmanager Receiver for Azure DevOps"
 
-# renovate: datasource=repology depName=alpine_3_21/ca-certificates-bundle versioning=loose
+# renovate: datasource=repology depName=alpine_3_22/busybox versioning=loose
+ENV BUSYBOX_VERSION="1.37.0-r18"
+
+# renovate: datasource=repology depName=alpine_3_22/busybox-binsh versioning=loose
+ENV BUSYBOX_BINSH_VERSION="1.37.0-r18"
+
+# renovate: datasource=repology depName=alpine_3_22/ca-certificates-bundle versioning=loose
 ENV CA_CERTIFICATES_BUNDLES_VERSION="20250619-r0"
 
-# renovate: datasource=repology depName=alpine_3_21/busybox versioning=loose
-ENV BUSYBOX_VERSION="1.37.0-r13"
+# renovate: datasource=repology depName=alpine_3_22/libcrypto3 versioning=loose
+ENV LIBCRYPTO3_VERSION="3.5.2-r0"
 
-# renovate: datasource=repology depName=alpine_3_21/busybox-binsh versioning=loose
-ENV BUSYBOX_BINSH_VERSION="1.37.0-r13"
+# renovate: datasource=repology depName=alpine_3_22/libgcc versioning=loose
+ENV LIBGCC_VERSION="14.2.0-r6"
 
-# renovate: datasource=repology depName=alpine_3_21/libcrypto3 versioning=loose
-ENV LIBCRYPTO3_VERSION="3.3.4-r0"
+# renovate: datasource=repology depName=alpine_3_22/libssl3 versioning=loose
+ENV LIBSSL3_VERSION="3.5.2-r0"
 
-# renovate: datasource=repology depName=alpine_3_21/ssl_client versioning=loose
-ENV SSL_VERSION="1.37.0-r13"
+# renovate: datasource=repology depName=alpine_3_22/libstdc++ versioning=loose
+ENV LIBSTDC_VERSION="14.2.0-r6"
 
-# renovate: datasource=repology depName=alpine_3_21/libgcc versioning=loose
-ENV LIBGCC_VERSION="14.2.0-r4"
+# renovate: datasource=repology depName=alpine_3_22/ssl_client versioning=loose
+ENV SSL_VERSION="1.37.0-r18"
 
-# renovate: datasource=repology depName=alpine_3_21/libssl3 versioning=loose
-ENV LIBSSL3_VERSION="3.3.4-r0"
-
-# renovate: datasource=repology depName=alpine_3_21/libstdc++ versioning=loose
-ENV LIBSTDC_VERSION="14.2.0-r4"
+# renovate: datasource=repology depName=alpine_3_22/zlib versioning=loose
+ENV ZLIB_VERSION="1.3.1-r2"
 
 RUN apk add --upgrade --no-cache \
-        ca-certificates-bundle>$CA_CERTIFICATES_BUNDLES_VERSION \
-        busybox>$BUSYBOX_BINSH_VERSION \
+        busybox>$BUSYBOX_VERSION \
         busybox-binsh>$BUSYBOX_BINSH_VERSION \
+        ca-certificates-bundle>$CA_CERTIFICATES_BUNDLES_VERSION \
         libcrypto3>$LIBCRYPTO3_VERSION \
-        ssl_client>$SSL_VERSION \
-        \
-        # .NET dependencies
         libgcc>$LIBGCC_VERSION \
         libssl3>$LIBSSL3_VERSION \
-        libstdc++>$LIBSTDC_VERSION
+        libstdc++>$LIBSTDC_VERSION \
+        ssl_client>$SSL_VERSION \
+        zlib>$ZLIB_VERSION
 
-USER app
+USER $APP_UID
 
 COPY --from=publish /app/publish .
 ENTRYPOINT ["./AKS.Kargo.AnalysisRun.Logs"]
+
+# This stage is used to build the service project
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine3.22@sha256:033283403fc5b8789467bb6a0f9670ebe0bc8f2276710cc99f1820f01789bafe AS build
+ARG BUILD_CONFIGURATION=Release
+ARG VERSION=0.0.1
+WORKDIR /src
+COPY ["AKS.Kargo.AnalysisRun.Logs.csproj", "."]
+RUN dotnet restore "./AKS.Kargo.AnalysisRun.Logs.csproj"
+COPY . .
+WORKDIR "/src/."
+RUN dotnet build "./AKS.Kargo.AnalysisRun.Logs.csproj" -c $BUILD_CONFIGURATION -o /app/build /p:Version=${VERSION}
+
+# This stage is used to publish the service project to be copied to the final stage
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+ARG VERSION=0.0.1
+RUN dotnet publish "./AKS.Kargo.AnalysisRun.Logs.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false /p:Version=${VERSION}
+
+# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "AKS.Kargo.AnalysisRun.Logs.dll"]
