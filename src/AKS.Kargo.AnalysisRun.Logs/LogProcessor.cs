@@ -26,7 +26,18 @@ public class LogProcessor : ILogProcessor
             yield break;
         }
 
-        var query = $"ContainerLogV2 | where PodNamespace == '{jobNamespace}' and PodName startswith '{jobName}' and ContainerName == '{containerName}' | project LogMessage";
+        var query = $"""
+            ContainerLogV2
+            | where PodNamespace == "{jobNamespace}"
+            | where ContainerName == "{containerName}"
+            | where PodName == toscalar(
+                KubePodInventory
+                | where ControllerName == "{jobName}"
+                | top 1 by TimeGenerated desc
+                | project Name
+            )
+            | project LogMessage
+            """;
 
         var results = await _logQueryClient.QueryWorkspaceAsync(shard.AzureMonitorWorkspaceId, query, QueryTimeRange.All, new LogsQueryOptions()
         {
