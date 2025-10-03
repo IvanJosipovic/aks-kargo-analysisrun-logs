@@ -22,8 +22,20 @@ This project is an API server which implements the [Kargo AnalysisRun Log](https
 Kargo queries this API, which in turn queries the Azure Log Analytics Workspace to retrieve container logs.
 
 The following query is issued:
+```
+ContainerLogV2
+| where PodNamespace == "{jobNamespace}"
+| where ContainerName == "{containerName}"
+| where PodName == toscalar(
+    KubePodInventory
+    | where ControllerName == "{jobName}"
+    | where Namespace == "{jobNamespace}"
+    | top 1 by TimeGenerated desc
+    | project Name
+)
+| project LogMessage
+```
 
-`ContainerLogV2 | where PodNamespace == '{jobNamespace}' and PodName startswith '{jobName}' and ContainerName == '{container}' | project LogMessage`
 
 ![](/docs/Diagram.png)
 
