@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
     <EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -13,8 +13,8 @@
     <OptimizationPreference>Speed</OptimizationPreference>
     <PublishAot>false</PublishAot>
     <PublishIISAssets>false</PublishIISAssets>
-    <PublishReadyToRun>true</PublishReadyToRun>
-    <SelfContained>true</SelfContained>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <SelfContained>false</SelfContained>
     <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <UserSecretsId>211c6aa5-24b3-4acc-88a9-5fa0db4d9578</UserSecretsId>
