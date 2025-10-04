@@ -23,7 +23,7 @@ ENV LIBCRYPTO3_VERSION="3.5.2-r0"
 ENV LIBGCC_VERSION="14.2.0-r6"
 
 # renovate: datasource=repology depName=alpine_3_22/libssl3 versioning=loose
-ENV LIBSSL3_VERSION="3.5.2-r0"
+ENV LIBSSL3_VERSION="3.5.4-r0"
 
 # renovate: datasource=repology depName=alpine_3_22/libstdc++ versioning=loose
 ENV LIBSTDC_VERSION="14.2.0-r6"
