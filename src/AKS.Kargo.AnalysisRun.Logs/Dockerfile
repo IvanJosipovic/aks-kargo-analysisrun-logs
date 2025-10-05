@@ -29,7 +29,7 @@ ENV LIBSSL3_VERSION="3.5.4-r0"
 ENV LIBSTDC_VERSION="14.2.0-r6"
 
 # renovate: datasource=repology depName=alpine_3_22/ssl_client versioning=loose
-ENV SSL_VERSION="1.37.0-r18"
+ENV SSL_VERSION="1.37.0-r19"
 
 # renovate: datasource=repology depName=alpine_3_22/zlib versioning=loose
 ENV ZLIB_VERSION="1.3.1-r2"
