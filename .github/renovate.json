@@ -69,7 +69,7 @@
       "groupName": "Dockerfile Dependecies",
       "groupSlug": "dockerfile-dependecies",
       "matchPackageNames": [
-        "alpine_*"
+        "alpine_.*"
       ],
       "matchUpdateTypes": [
         "major",
