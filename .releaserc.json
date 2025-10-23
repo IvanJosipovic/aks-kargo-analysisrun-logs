@@ -26,7 +26,7 @@
     [
       "@semantic-release/changelog",
       {
-        "changelogFile": "charts/oidc-guard/CHANGELOG.md"
+        "changelogFile": "charts/aks-kargo-analysisrun-logs/CHANGELOG.md"
       }
     ],
     "@semantic-release/github"
