@@ -23,6 +23,12 @@
         "preset": "conventionalcommits"
       }
     ],
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "charts/aks-kargo-analysisrun-logs/CHANGELOG.md"
+      }
+    ],
     "@semantic-release/github"
   ]
 }
