@@ -1,5 +1,5 @@
-﻿using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+﻿using Azure.Monitor.Query.Logs;
+using System.Runtime.CompilerServices;
 
 namespace AKS.Kargo.AnalysisRun.Logs;
 
@@ -16,7 +16,7 @@ public class LogProcessor : ILogProcessor
         _logQueryClient = logQueryClient;
     }
 
-    public async IAsyncEnumerable<string?> GetLogs(string shardName, string jobNamespace, string jobName, string containerName)
+    public async IAsyncEnumerable<string> GetLogs(string shardName, string jobNamespace, string jobName, string containerName, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         var shard = _settings.Shards.Where(e => e.Name == shardName).FirstOrDefault();
 
@@ -40,13 +40,15 @@ public class LogProcessor : ILogProcessor
             | project LogMessage
             """;
 
-        var results = await _logQueryClient.QueryWorkspaceAsync(shard.AzureMonitorWorkspaceId, query, QueryTimeRange.All, new LogsQueryOptions()
+        var results = await _logQueryClient.QueryWorkspaceAsync(shard.AzureMonitorWorkspaceId, query, LogsQueryTimeRange.All, new LogsQueryOptions()
         {
             AllowPartialErrors = true // Prevents error, The results of this query exceed the set limit of 64000000 bytes, so not all records were returned (E_QUERY_RESULT_SET_TOO_LARGE, 0x80DA0003
-        });
+        }, cancellationToken);
 
-        foreach (LogsTableRow row in results.Value.Table.Rows)
+        foreach (var row in results.Value.Table.Rows)
         {
+            if (cancellationToken.IsCancellationRequested)
+                yield break;
             yield return row.GetString("LogMessage");
         }
     }
