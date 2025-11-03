@@ -1,6 +1,6 @@
 using Azure.Core;
 using Azure.Identity;
-using Azure.Monitor.Query;
+using Azure.Monitor.Query.Logs;
 using FluentValidation;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
@@ -93,24 +93,24 @@ public class Program
                                                                                   string containerName,
                                                                                   [FromServices] ILogProcessor processor,
                                                                                   HttpRequest request,
-                                                                                  HttpResponse response) =>
+                                                                                  HttpResponse response,
+                                                                                  CancellationToken ct) =>
         {
             if (!string.IsNullOrEmpty(settings.AuthorizationHeader) && !request.Headers.Authorization.Equals(settings.AuthorizationHeader))
             {
                 return Results.Unauthorized();
             }
 
-            response.ContentType = "text/event-stream";
+            response.ContentType = "text/plain; charset=utf-8";
             response.Headers.CacheControl = "no-cache";
             response.Headers.Connection = "keep-alive";
             response.StatusCode = StatusCodes.Status200OK;
 
-            await foreach (var log in processor.GetLogs(shardName, jobNamespace, jobName, containerName))
+            await foreach (var log in processor.GetLogs(shardName, jobNamespace, jobName, containerName, ct))
             {
-                await response.WriteAsync(log + Environment.NewLine);
+                await response.WriteAsync(log + Environment.NewLine, cancellationToken: ct);
+                await response.Body.FlushAsync(ct);
             }
-
-            await response.Body.FlushAsync();
 
             return Results.Empty;
         }).WithRequestTimeout(TimeSpan.FromMinutes(2));
