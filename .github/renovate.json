@@ -25,9 +25,8 @@
       ],
       "matchPackageNames": [
         "OpenTelemetry.Exporter.Prometheus.AspNetCore",
-        "OpenTelemetry.Instrumentation.EventCounters"
-      ],
-      "respectLatest": false
+        "OpenTelemetry.Instrumentation.Process"
+      ]
     },
     {
       "automerge": true,
