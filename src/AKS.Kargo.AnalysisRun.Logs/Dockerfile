@@ -8,10 +8,10 @@ ENV ASPNETCORE_HTTP_PORTS=8080
 LABEL org.opencontainers.image.description="AKS Kargo AnalysisRun Logs"
 
 # renovate: datasource=repology depName=alpine_3_22/busybox versioning=loose
-ENV BUSYBOX_VERSION="1.37.0-r19"
+ENV BUSYBOX_VERSION="1.37.0-r20"
 
 # renovate: datasource=repology depName=alpine_3_22/busybox-binsh versioning=loose
-ENV BUSYBOX_BINSH_VERSION="1.37.0-r19"
+ENV BUSYBOX_BINSH_VERSION="1.37.0-r20"
 
 # renovate: datasource=repology depName=alpine_3_22/ca-certificates-bundle versioning=loose
 ENV CA_CERTIFICATES_BUNDLES_VERSION="20250911-r0"
@@ -29,7 +29,7 @@ ENV LIBSSL3_VERSION="3.5.4-r0"
 ENV LIBSTDC_VERSION="14.2.0-r6"
 
 # renovate: datasource=repology depName=alpine_3_22/ssl_client versioning=loose
-ENV SSL_VERSION="1.37.0-r19"
+ENV SSL_VERSION="1.37.0-r20"
 
 # renovate: datasource=repology depName=alpine_3_22/zlib versioning=loose
 ENV ZLIB_VERSION="1.3.1-r2"
