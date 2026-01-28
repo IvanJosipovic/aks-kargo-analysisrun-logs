@@ -17,13 +17,13 @@ ENV BUSYBOX_BINSH_VERSION="1.37.0-r20"
 ENV CA_CERTIFICATES_BUNDLES_VERSION="20250911-r0"
 
 # renovate: datasource=repology depName=alpine_3_22/libcrypto3 versioning=loose
-ENV LIBCRYPTO3_VERSION="3.5.4-r0"
+ENV LIBCRYPTO3_VERSION="3.5.5-r0"
 
 # renovate: datasource=repology depName=alpine_3_22/libgcc versioning=loose
 ENV LIBGCC_VERSION="14.2.0-r6"
 
 # renovate: datasource=repology depName=alpine_3_22/libssl3 versioning=loose
-ENV LIBSSL3_VERSION="3.5.4-r0"
+ENV LIBSSL3_VERSION="3.5.5-r0"
 
 # renovate: datasource=repology depName=alpine_3_22/libstdc++ versioning=loose
 ENV LIBSTDC_VERSION="14.2.0-r6"
