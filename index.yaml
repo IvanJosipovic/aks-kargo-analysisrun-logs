@@ -5,6 +5,28 @@ entries:
       artifacthub.io/category: monitoring-logging
       artifacthub.io/license: MIT
     apiVersion: v2
+    appVersion: 1.1.24
+    created: "2026-01-31T09:31:48.226706549Z"
+    description: Kargo AnalysisRun Log API for Azure Kubernetes Service and Log Analytics
+      workspace
+    digest: 31e98c5df82d3a09bc8d741b3b843c865fb2d9019bd3b09bea5912dd5a348376
+    home: https://github.com/IvanJosipovic/aks-kargo-analysisrun-logs
+    keywords:
+    - kargo
+    - logs
+    - aks
+    - log analytics workspace
+    name: aks-kargo-analysisrun-logs
+    sources:
+    - https://github.com/IvanJosipovic/aks-kargo-analysisrun-logs
+    type: application
+    urls:
+    - https://github.com/IvanJosipovic/aks-kargo-analysisrun-logs/releases/download/aks-kargo-analysisrun-logs-1.1.24/aks-kargo-analysisrun-logs-1.1.24.tgz
+    version: 1.1.24
+  - annotations:
+      artifacthub.io/category: monitoring-logging
+      artifacthub.io/license: MIT
+    apiVersion: v2
     appVersion: 1.1.23
     created: "2026-01-29T09:35:42.981776453Z"
     description: Kargo AnalysisRun Log API for Azure Kubernetes Service and Log Analytics
@@ -1167,4 +1189,4 @@ entries:
     urls:
     - https://github.com/IvanJosipovic/aks-kargo-analysisrun-logs/releases/download/aks-kargo-analysisrun-logs-1.0.0-alpha.1/aks-kargo-analysisrun-logs-1.0.0-alpha.1.tgz
     version: 1.0.0-alpha.1
-generated: "2026-01-29T09:35:42.982037531Z"
+generated: "2026-01-31T09:31:48.226903204Z"
