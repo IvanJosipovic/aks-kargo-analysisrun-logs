@@ -28,6 +28,15 @@
         "OpenTelemetry.Instrumentation.Process"
       ]
     },
+      {
+      "groupName": "OpenTelemetry",
+      "separateMajorMinor": true,
+      "groupSlug": "opentelemetry",
+      "matchPackageNames": [
+        "OpenTelemetry",
+        "OpenTelemetry.*"
+      ]
+    },
     {
       "automerge": true,
       "matchFileNames": [
