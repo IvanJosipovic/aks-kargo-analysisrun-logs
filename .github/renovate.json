@@ -10,6 +10,8 @@
     "config:recommended"
   ],
   "platformAutomerge": true,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
   "ignorePaths": [
     "**/docs/**",
     "**/charts/**"
