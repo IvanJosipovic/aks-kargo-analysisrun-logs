@@ -30,7 +30,7 @@
         "OpenTelemetry.Instrumentation.Process"
       ]
     },
-      {
+    {
       "groupName": "OpenTelemetry",
       "separateMajorMinor": true,
       "groupSlug": "opentelemetry",
