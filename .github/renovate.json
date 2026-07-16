@@ -10,6 +10,8 @@
     "config:recommended"
   ],
   "platformAutomerge": true,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
   "ignorePaths": [
     "**/docs/**",
     "**/charts/**"
@@ -26,6 +28,15 @@
       "matchPackageNames": [
         "OpenTelemetry.Exporter.Prometheus.AspNetCore",
         "OpenTelemetry.Instrumentation.Process"
+      ]
+    },
+    {
+      "groupName": "OpenTelemetry",
+      "separateMajorMinor": true,
+      "groupSlug": "opentelemetry",
+      "matchPackageNames": [
+        "OpenTelemetry",
+        "OpenTelemetry.*"
       ]
     },
     {
