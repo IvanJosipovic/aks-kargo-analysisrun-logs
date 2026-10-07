@@ -32,7 +32,7 @@ ENV LIBSTDC_VERSION="15.2.0-r2"
 ENV SSL_VERSION="1.37.0-r30"
 
 # renovate: datasource=repology depName=alpine_3_23/zlib versioning=loose
-ENV ZLIB_VERSION="1.3.2-r0"
+ENV ZLIB_VERSION="1.3.2-r1"
 
 RUN apk add --upgrade --no-cache \
         busybox>$BUSYBOX_VERSION \
